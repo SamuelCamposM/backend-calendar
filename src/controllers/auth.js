@@ -4,7 +4,7 @@ import bcryptjs from "bcryptjs";
 import { generarJwt } from "../helpers";
 
 export const createUser = async (req, res = response) => {
-  console.log(req.body);
+ 
   const { email } = req.body;
   try {
     let usuario = await UsuarioModel.findOne({ email });
@@ -39,8 +39,7 @@ export const createUser = async (req, res = response) => {
   }
 };
 
-export const loginUser = async (req, res = response) => {
-  console.log(req.body);
+export const loginUser = async (req, res = response) => { 
   const { email, password } = req.body;
   try {
     const usuario = await UsuarioModel.findOne({ email });
@@ -77,8 +76,7 @@ export const loginUser = async (req, res = response) => {
 };
 
 export const renewToken = async (req, res = response) => {
-  const { uid, name } = req;
-  console.log({ uid, name });
+  const { uid, name } = req; 
   //TODO: GENERAR JWT
   const token = await generarJwt(uid, name);
   res.json({

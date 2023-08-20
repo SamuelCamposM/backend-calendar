@@ -13,32 +13,30 @@ export const crearEvento = async (req, res) => {
   try {
     evento.user = req.uid;
     const eventoGuardado = await evento.save();
+    const eventoPoblado = await eventoGuardado.populate("user", ["name"]);
     res.json({
       ok: true,
-      evento: eventoGuardado,
+      evento: eventoPoblado,
     });
-  } catch (error) {
+  } catch (error) {  
     res.status(500).json({
       ok: false,
       msg: "Hable con el administrador",
     });
   }
-
-  res.json({
-    ok: true,
-  });
 };
 export const editarEvento = async (req, res) => {
   const eventoId = req.params.id;
   const uid = req.uid;
   try {
-    const evento = EventoModel.findById(eventoId);
+    const evento = await EventoModel.findById(eventoId);
     if (!evento) {
       return res.status(404).json({
         ok: false,
         msg: "Evento no existe por id",
       });
     }
+
     if (evento.user.toString() !== uid) {
       return res.status(401).json({
         ok: false,
@@ -54,11 +52,12 @@ export const editarEvento = async (req, res) => {
       nuevoEvento,
       { new: true }
     );
+    const eventoPoblado = await eventoActualizado.populate("user", ["name"]);
     res.json({
-      ok: false,
-      evento: eventoActualizado,
+      ok: true,
+      evento: eventoPoblado,
     });
-  } catch (error) {
+  } catch (error) { 
     res.status(500).json({
       ok: false,
       msg: "Hable con el administrador",
@@ -69,7 +68,7 @@ export const eliminarEvento = async (req, res) => {
   const eventoId = req.params.id;
   const uid = req.uid;
   try {
-    const evento = EventoModel.findById(eventoId);
+    const evento = await EventoModel.findById(eventoId);
     if (!evento) {
       return res.status(404).json({
         ok: false,
@@ -87,7 +86,7 @@ export const eliminarEvento = async (req, res) => {
     res.json({
       ok: false,
     });
-  } catch (error) {
+  } catch (error) { 
     res.status(500).json({
       ok: false,
       msg: "Hable con el administrador",
