@@ -77,7 +77,8 @@ export const loginUser = async (req, res = response) => {
 };
 
 export const renewToken = async (req, res = response) => {
-  const { uid, name } = req.uid;
+  const { uid, name } = req;
+  console.log({ uid, name });
   //TODO: GENERAR JWT
   const token = await generarJwt(uid, name);
   res.json({
