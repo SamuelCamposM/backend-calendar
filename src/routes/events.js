@@ -13,7 +13,7 @@ import { validarCampos } from "../middlewares";
 import { isDateF } from "../helpers/isDateF";
 export const eventRouter = express.Router();
 
-
+eventRouter.use(validarToken)
 eventRouter.get(
   "/",
 

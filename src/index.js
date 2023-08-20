@@ -9,6 +9,8 @@ dbConnection();
 
 const app = express();
 
+// Lectura y parseo del body
+app.use(express.json());
 // CORS
 app.use(cors());
 

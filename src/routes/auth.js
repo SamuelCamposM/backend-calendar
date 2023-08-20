@@ -8,6 +8,7 @@ import { validarCampos } from "../middlewares";
 import { validarToken } from "../middlewares/validarToken";
 export const authRouter = express.Router();
 
+
 authRouter.post(
   "/new",
   [
@@ -16,7 +17,6 @@ authRouter.post(
     check("password", "El password debe de 6 caracteres").isLength({ min: 6 }),
     validarCampos,
   ],
-
   createUser
 );
 
